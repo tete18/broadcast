@@ -27,6 +27,24 @@ client.user.setGame("$bc")
 client.user.setStatus("Online")
 });
 
+ if(!args) {
+                        return message.reply("**يجب عليك كتابة كلمة او جملة لإرسال البرودكاست**");
+                    }
+                        message.channel.send(`**هل أنت متأكد من إرسالك البرودكاست؟\nمحتوى البرودكاست: \`${args}\`**`).then(m => {
+                            m.react("✅")
+                            .then(() => m.react("❌"));
+
+                            let yesFilter = (reaction, user) => reaction.emoji.name == "✅" && user.id == message.author.id;
+                            let noFiler = (reaction, user) => reaction.emoji.name == "❌" && user.id == message.author.id;
+
+                            let yes = m.createReactionCollector(yesFilter);
+                            let no = m.createReactionCollector(noFiler);
+                            no.on("collect", v => {
+                              m.delete();
+                             message.channel.send("**Broadcast Canceled.**").then(msg => msg.delete(3000));
+                         });
+                            
+
 client.on("message", async message => {
     if(message.content.startsWith(prefix + "help")) {
         let help = new Discord.RichEmbed()
@@ -43,5 +61,41 @@ client.on("message", async message => {
     }
 });
 
+
+              if(!args) {
+                        return message.reply("**يجب عليك كتابة كلمة او جملة لإرسال البرودكاست**");
+                    }
+                        message.channel.send(`**هل أنت متأكد من إرسالك البرودكاست؟\nمحتوى البرودكاست: \`${args}\`**`).then(m => {
+                            m.react("✅")
+                            .then(() => m.react("❌"));
+
+                            et yesFilter = (reaction, user) => reaction.emoji.name == "✅" && user.id == message.author.id;
+                            let noFiler = (reaction, user) => reaction.emoji.name == "❌" && user.id == message.author.id;
+
+                            let yes = m.createReactionCollector(yesFilter);
+                            let no = m.createReactionCollector(noFiler);
+
+                            yes.on("collect", v => {
+                                m.delete();
+                                    message.channel.send(`:ballot_box_with_check: | Done ... The Broadcast Message Has Been Sent For ${message.guild.memberCount} Members`).then(msg => msg.delete(5000));
+                                        message.guild.members.forEach(member => {
+                                            let bc = new Discord.RichEmbed()
+                                            .setColor("RANDOM")
+                                            .setThumbnail(message.author.avatarURL)
+                                            .setTitle("Broadcast")
+                                            .addField("Server", message.guild.name)
+                                            .addField("Sender", message.author.username)
+                                            .addField("Message", args);
+
+                                            member.sendEmbed(bc);
+                                        });
+                        });
+                        no.on("collect", v => {
+                            m.delete();
+                            message.channel.send("**Broadcast Canceled.**").then(msg => msg.delete(3000));
+                        });
+                            
+                        });
+            }
 
 client.login(process.env.BOT_TOKEN);
