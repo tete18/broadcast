@@ -32,8 +32,6 @@ client.on("message", async message => {
                                             .setColor("RANDOM")
                                             .setThumbnail(message.author.avatarURL)
                                             .setTitle("Broadcast")
-                                            .addField("Server", message.guild.name)
-                                            .addField("Sender", message.author.username)
                                             .addField("Message", args);
 
                                             member.sendEmbed(bc);
