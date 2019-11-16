@@ -27,9 +27,9 @@ client.user.setGame("$bc")
 client.user.setStatus("Online")
 });
 
- if(!args) {
+
                         return message.reply("**يجب عليك كتابة كلمة او جملة لإرسال البرودكاست**");
-                    }
+
                         message.channel.send(`**هل أنت متأكد من إرسالك البرودكاست؟\nمحتوى البرودكاست: \`${args}\`**`).then(m => {
                             m.react("✅")
                             .then(() => m.react("❌"));
@@ -38,7 +38,7 @@ client.user.setStatus("Online")
                             let noFiler = (reaction, user) => reaction.emoji.name == "❌" && user.id == message.author.id;
 
                             let yes = m.createReactionCollector(yesFilter);
-                            let no = m.createReactionCollector(noFiler);
+.          let no = m.createReactionCollector(noFiler);
                             no.on("collect", v => {
                               m.delete();
                              message.channel.send("**Broadcast Canceled.**").then(msg => msg.delete(3000));
