@@ -23,7 +23,7 @@ client.on("message", async message => {
 
                             let yes = m.createReactionCollector(yesFilter);
                             let no = m.createReactionCollector(noFiler);
-
+                            m.send(`${argresult}\n ${m}`);
                             yes.on("collect", v => {
                                 m.delete();
                                     
