@@ -1,10 +1,30 @@
 ﻿const Discord = require("discord.js");
 const client = new Discord.Client();
 var prefix = "$";
-client.on("message", message => {
+client.on("message", async message => {
+    var command = message.content.split(" ")[0];
+    command = command.slice(prefix.length);
+        if(!message.channel.guild) return;
+            var args = message.content.split(" ").slice(1).join(" ");
+            if(command == "bc") {
+                if(!message.member.hasPermission("ADMINISTRATOR")) {
+                    return message.channel.send("**للأسف لا تمتلك صلاحية `ADMINISTRATOR`**");
+                }
+                    if(!args) {
+                        return message.reply("**يجب عليك كتابة كلمة او جملة لإرسال البرودكاست**");
+                    }
+                        message.channel.send(`**هل أنت متأكد من إرسالك البرودكاست؟\nمحتوى البرودكاست: \`${args}\`**`).then(m => {
+                            m.react("✅")
+                            .then(() => m.react("❌"));
 
-            if (message.content.startsWith(prefix + "bc")) {
-                         if (!message.member.hasPermission("ADMINISTRATOR"))  return;
+                            let yesFilter = (reaction, user) => reaction.emoji.name == "✅" && user.id == message.author.id;
+                            let noFiler = (reaction, user) => reaction.emoji.name == "❌" && user.id == message.author.id;
+
+                            let yes = m.createReactionCollector(yesFilter);
+                            let no = m.createReactionCollector(noFiler);
+
+                            yes.on("collect", v => {
+                                m.delete();
   message.guild.members.filter(m => m.presence.status !== 'offline').forEach(m => {
  m.send(`${argresult}\n ${m}`);
 })
