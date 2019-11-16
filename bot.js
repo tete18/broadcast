@@ -1,6 +1,9 @@
 ﻿const Discord = require("discord.js");
 const client = new Discord.Client();
 var prefix = "$";
+
+
+
 client.on("message", async message => {
     var command = message.content.split(" ")[0];
     command = command.slice(prefix.length);
@@ -25,13 +28,26 @@ client.on("message", async message => {
 
                             yes.on("collect", v => {
                                 m.delete();
-  message.guild.members.filter(m => m.presence.status !== 'offline').forEach(m => {
- m.send(`${argresult}\n ${m}`);
-})
- message.channel.send(`\`${message.guild.members.filter(m => m.presence.status !== 'online').size}\` : عدد الاعضاء المستلمين`); 
- message.delete(); 
-};     
-});
+                                    message.channel.send(`:ballot_box_with_check: | Done ... The Broadcast Message Has Been Sent For ${message.guild.memberCount} Members`).then(msg => msg.delete(5000));
+                                        message.guild.members.forEach(member => {
+                                            let bc = new Discord.RichEmbed()
+                                            .setColor("RANDOM")
+                                            .setThumbnail(message.author.avatarURL)
+                                            .setTitle("Broadcast")
+                                            .addField("Server", message.guild.name)
+                                            .addField("Sender", message.author.username)
+                                            .addField("Message", args);
+
+                                            member.sendEmbed(bc);
+                                        });
+                        });
+                        no.on("collect", v => {
+                            m.delete();
+                            message.channel.send("**Broadcast Canceled.**").then(msg => msg.delete(3000));
+                        });
+                            
+                        });
+            }
 
 
 client.on('ready', () => {
