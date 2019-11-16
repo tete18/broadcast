@@ -30,7 +30,7 @@ client.user.setStatus("Online")
 client.on("message", async message => {
     if(message.content.startsWith(prefix + "help")) {
         let help = new Discord.RichEmbed()
-            .setColor("gold")
+            .setColor("#FA8072")
             .setThumbnail(message.author.avatarURL)
             .setDescription(`**__برودكاست بوت | Version 0.1__ 
             برودكاست عادي : ${prefix}bc
