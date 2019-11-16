@@ -5,9 +5,6 @@ client.on("message", message => {
 
             if (message.content.startsWith(prefix + "bc")) {
                          if (!message.member.hasPermission("ADMINISTRATOR"))  return;
-  message.channel.send("**للأسف لا تمتلك صلاحية `ADMINISTRATOR`**");
-                
-  var argresult = args.join(' '); 
   message.guild.members.filter(m => m.presence.status !== 'offline').forEach(m => {
  m.send(`${argresult}\n ${m}`);
 })
